@@ -10,6 +10,7 @@ urlpatterns = [
     # Coupons
     path('coupons/', views.CouponListView.as_view(), name='coupon-list'),
     path('coupons/<int:pk>/', views.CouponDetailView.as_view(), name='coupon-detail'),
+    path('coupons/options/', views.coupon_options, name='coupon-options'),
     path('coupons/validate/', views.validate_coupon, name='validate-coupon'),
     path('coupons/apply/<int:appointment_id>/', views.apply_coupon, name='apply-coupon'),
     

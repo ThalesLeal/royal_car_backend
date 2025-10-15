@@ -2,9 +2,7 @@ from rest_framework import generics, permissions, filters, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q, Avg, Count, Sum
-from django.utils import timezone
-from datetime import datetime, timedelta
+from datetime import datetime
 from .models import Appointment, TimeSlot, ChatMessage
 from .serializers import (
     AppointmentSerializer, AppointmentCreateSerializer, TimeSlotSerializer,

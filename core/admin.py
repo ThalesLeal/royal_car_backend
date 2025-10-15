@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, SiteContent
+from .models import User, SiteContent, AuditLog
 
 
 @admin.register(User)
@@ -18,6 +18,12 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(SiteContent)
 class SiteContentAdmin(admin.ModelAdmin):
     list_display = ('key', 'title', 'is_active', 'created_at')
-    list_filter = ('is_active', 'created_at')
-    search_fields = ('key', 'title')
-    ordering = ('-created_at',)
+
+
+@admin.register(AuditLog)
+class AuditLogAdmin(admin.ModelAdmin):
+    list_display = ('action', 'model_name', 'object_repr', 'user', 'timestamp')
+    list_filter = ('action', 'model_name', 'timestamp', 'user')
+    search_fields = ('object_repr', 'user__username', 'ip_address')
+    readonly_fields = ('timestamp', 'ip_address', 'user_agent', 'changes')
+    ordering = ('-timestamp',)

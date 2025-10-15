@@ -1,6 +1,15 @@
 {
-  "dependencies": {
-    "@floating-ui/core": "^1.7.3",
-    "@floating-ui/utils": "^0.2.10"
-  }
+  "name": "royal-car-wash-backend",
+  "version": "1.0.0",
+  "description": "Backend API para Royal Car Wash",
+  "main": "manage.py",
+  "scripts": {
+    "start": "python manage.py runserver 127.0.0.1:8000 --noreload",
+    "dev": "python manage.py runserver 127.0.0.1:8000",
+    "migrate": "python manage.py migrate",
+    "collectstatic": "python manage.py collectstatic --noinput"
+  },
+  "keywords": ["django", "api", "car-wash", "backend"],
+  "author": "Royal Car Wash Team",
+  "license": "MIT"
 }

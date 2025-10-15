@@ -2,7 +2,6 @@ from rest_framework import generics, permissions, filters, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q, Sum, Count
 from .models import LoyaltyPoints, LoyaltyReward, LoyaltyTransaction, LoyaltyTier
 from .serializers import (
     LoyaltyPointsSerializer, LoyaltyRewardSerializer, LoyaltyTransactionSerializer,

@@ -2,7 +2,6 @@ from rest_framework import generics, permissions, filters, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q, Sum, Count
 from .models import Payment, Coupon, CouponUsage
 from .serializers import (
     PaymentSerializer, CouponSerializer, CouponUsageSerializer,
@@ -183,3 +182,26 @@ def payment_stats(request):
     }
     
     return Response(stats)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def coupon_options(request):
+    """Get coupon type options and validation rules"""
+    return Response({
+        'coupon_types': [
+            {'value': 'percentage', 'label': 'Porcentagem'},
+            {'value': 'fixed', 'label': 'Valor Fixo'}
+        ],
+        'validation_rules': {
+            'coupon_type': 'Obrigatório. Opções: "percentage" ou "fixed"',
+            'discount_value': 'Obrigatório. Deve ser maior que zero. Para porcentagem, máximo 100',
+            'code': 'Obrigatório. Código único do cupom',
+            'description': 'Obrigatório. Descrição do cupom',
+            'valid_from': 'Obrigatório. Data de início da validade',
+            'valid_until': 'Obrigatório. Data de término da validade',
+            'min_order_value': 'Opcional. Valor mínimo do pedido',
+            'max_discount': 'Opcional. Desconto máximo (para cupons percentuais)',
+            'usage_limit': 'Opcional. Limite de uso do cupom'
+        }
+    })

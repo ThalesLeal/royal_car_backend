@@ -26,6 +26,11 @@ class DetalharUsuariosView(generics.RetrieveUpdateDestroyAPIView):
             return super().get_object()
         return self.request.user
 
+    def patch(self, request, *args, **kwargs):
+        # Garantir atualização parcial ao receber PATCH
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])

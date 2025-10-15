@@ -5,27 +5,41 @@ from .models import User, SiteContent
 
 class UserSerializer(serializers.ModelSerializer):
     """User serializer"""
-    password = serializers.CharField(write_only=True, min_length=8)
-    password_confirm = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, min_length=8, required=False)
+    password_confirm = serializers.CharField(write_only=True, required=False)
+    user_type_display = serializers.SerializerMethodField()
     
     class Meta:
         model = User
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name', 
             'phone', 'address', 'birth_date', 'is_customer', 
-            'is_employee', 'is_admin', 'created_at', 'updated_at',
+            'is_employee', 'is_admin', 'user_type_display', 'created_at', 'updated_at',
             'password', 'password_confirm'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at', 'user_type_display']
+    
+    def get_user_type_display(self, obj):
+        """Retorna o tipo de usuário em português"""
+        return obj.get_user_type_display()
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password_confirm']:
-            raise serializers.ValidationError("Passwords don't match.")
+        password = attrs.get('password')
+        password_confirm = attrs.get('password_confirm')
+
+        # Validate only if password fields are provided in the payload
+        if password is not None or password_confirm is not None:
+            if not password or not password_confirm:
+                raise serializers.ValidationError('Both password and password_confirm are required to set a new password.')
+            if password != password_confirm:
+                raise serializers.ValidationError("Passwords don't match.")
         return attrs
 
     def create(self, validated_data):
-        validated_data.pop('password_confirm')
-        password = validated_data.pop('password')
+        validated_data.pop('password_confirm', None)
+        password = validated_data.pop('password', None)
+        if not password:
+            raise serializers.ValidationError('Password is required for user creation.')
         user = User.objects.create_user(password=password, **validated_data)
         return user
 
