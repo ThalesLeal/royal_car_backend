@@ -10,9 +10,9 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('services', '0001_initial'),
+        ('servicos', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('appointments', '0001_initial'),
+        ('agendamentos', '0001_initial'),
     ]
 
     operations = [

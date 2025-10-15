@@ -24,10 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', views.api_root, name='api-root'),
     path('api/auth/', include('core.urls')),
-    path('api/services/', include('services.urls')),
-    path('api/appointments/', include('appointments.urls')),
-    path('api/payments/', include('payments.urls')),
-    path('api/loyalty/', include('loyalty.urls')),
+    path('api/servicos/', include('servicos.urls')),
+    path('api/agendamentos/', include('agendamentos.urls')),
+    path('api/pagamentos/', include('pagamentos.urls')),
+    path('api/fidelidade/', include('fidelidade.urls')),
 ]
 
 # Serve media files in development

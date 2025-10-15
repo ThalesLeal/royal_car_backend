@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('appointments', '0001_initial'),
+        ('agendamentos', '0001_initial'),
     ]
 
     operations = [

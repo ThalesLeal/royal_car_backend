@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'core',
-    'appointments',
-    'services',
-    'payments',
-    'loyalty',
+    'agendamentos',
+    'servicos',
+    'pagamentos',
+    'fidelidade',
 ]
 
 MIDDLEWARE = [
