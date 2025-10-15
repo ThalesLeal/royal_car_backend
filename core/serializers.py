@@ -8,8 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8, required=False)
     password_confirm = serializers.CharField(write_only=True, required=False)
     user_type_display = serializers.SerializerMethodField()
-    user_type_icon = serializers.SerializerMethodField()
-    status_display = serializers.SerializerMethodField()
     
     class Meta:
         model = User
@@ -17,29 +15,13 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'username', 'email', 'first_name', 'last_name', 
             'phone', 'address', 'birth_date', 'is_customer', 
             'is_employee', 'is_admin', 'is_active', 'user_type_display', 
-            'user_type_icon', 'status_display', 'created_at', 'updated_at',
-            'password', 'password_confirm'
+            'created_at', 'updated_at', 'password', 'password_confirm'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at', 'user_type_display', 'user_type_icon', 'status_display']
+        read_only_fields = ['id', 'created_at', 'updated_at', 'user_type_display']
     
     def get_user_type_display(self, obj):
         """Retorna o tipo de usuário em português"""
         return obj.get_user_type_display()
-    
-    def get_user_type_icon(self, obj):
-        """Retorna o ícone do tipo de usuário"""
-        if obj.is_admin:
-            return "👑"  # Coroa para Admin
-        elif obj.is_employee:
-            return "👤"  # Bonequinho para Funcionário
-        elif obj.is_customer:
-            return "🛒"  # Carrinho para Cliente
-        else:
-            return "👤"  # Bonequinho padrão
-    
-    def get_status_display(self, obj):
-        """Retorna o status do usuário em português"""
-        return "Ativo" if obj.is_active else "Inativo"
 
     def validate(self, attrs):
         password = attrs.get('password')
